@@ -1,7 +1,6 @@
 package com.example.shruti.homeautomation;
 
 import android.content.Context;
-import android.content.Intent;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,7 +12,6 @@ import android.widget.Toast;
 
 import com.pubnub.api.Pubnub;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 
 /**
@@ -58,7 +56,6 @@ public class SchedulerAdapter extends ArrayAdapter<DeviceSchedulerBO> {
         imageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // TODO Auto-generated method stub
                 String deviceIP = deviceSchedulerBO.getDeviceIP();
                 String schedulerTime = deviceSchedulerBO.getAlarmTime();
                 Log.d("Settings", deviceIP + " "+schedulerTime);

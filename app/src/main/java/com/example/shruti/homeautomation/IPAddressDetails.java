@@ -1,7 +1,5 @@
 package com.example.shruti.homeautomation;
 
-import android.os.Parcelable;
-
 import java.io.Serializable;
 
 /**

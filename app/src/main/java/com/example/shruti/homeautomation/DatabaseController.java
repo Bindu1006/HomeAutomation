@@ -229,7 +229,7 @@ public class DatabaseController {
         database = databaseHelper.getWritableDatabase();
         String selectQuery = "SELECT * FROM " + ALARM_TABLE_NAME;
         Cursor cursor      = database.rawQuery(selectQuery, null);
-        ArrayList<DeviceSchedulerBO> deviceSchedulerList = new ArrayList<DeviceSchedulerBO>();
+        ArrayList<DeviceSchedulerBO> deviceSchedulerList = new ArrayList<>();
         String[] data      = null;
 
 
@@ -264,7 +264,7 @@ public class DatabaseController {
                 status = cursor.getString(0);
             } while (cursor.moveToNext());
         }
-
+        cursor.close();
         return status;
     }
 
@@ -329,7 +329,7 @@ public class DatabaseController {
             database.insertOrThrow(VIDEO_TABLE_NAME, null, videoValues);
             result = true;
         }
-
+        cursor.close();
         return result;
 
     }

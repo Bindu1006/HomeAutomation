@@ -13,7 +13,6 @@ import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.SeekBar;
 import android.widget.Switch;
-import android.widget.TextView;
 
 import com.pubnub.api.Callback;
 import com.pubnub.api.Pubnub;
@@ -101,7 +100,7 @@ public class ConfigureLedPins extends AppCompatActivity {
                         noText = true;
                     }
 
-                    if(noText == false){
+                    if(!noText){
                         publish(255,255,255);
                         setRGBSeekBar(255,255,255);
                     } else {

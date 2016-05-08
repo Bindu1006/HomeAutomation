@@ -4,7 +4,6 @@ import android.app.AlarmManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
-import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -13,7 +12,6 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
 import android.widget.Switch;
-import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
@@ -90,6 +88,7 @@ public class wemoSettings extends AppCompatActivity {
 
         final Switch switch_status = (Switch) findViewById(R.id.id_alarmSwitch);
         boolean switchStatus = switch_status.getShowText();
+
         String switchStatusTxt = "OFF";
         if (switchStatus) {
             switchStatusTxt = "ON";
@@ -116,7 +115,7 @@ public class wemoSettings extends AppCompatActivity {
         Log.d("settingsPage"," View Schedule ");
         databaseController = new DatabaseController(getBaseContext());
         DeviceSchedulerBO deviceScheduler = new DeviceSchedulerBO();
-        ArrayList<DeviceSchedulerBO> deviceSchedulerList = new ArrayList<DeviceSchedulerBO>();
+        ArrayList<DeviceSchedulerBO> deviceSchedulerList ;
         deviceSchedulerList = databaseController.viewSchedule();
 
         Intent intent = new Intent(this, ViewDeviceScheduler.class);

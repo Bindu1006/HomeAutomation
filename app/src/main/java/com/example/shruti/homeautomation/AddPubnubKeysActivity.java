@@ -54,11 +54,11 @@ public class AddPubnubKeysActivity extends AppCompatActivity {
             noText = true;
         }
 
-        if(noText == false){
+        if(!noText){
             final String replacePubKey = PUB_KEY;
             final String replaceSubKey = SUB_KEY;
             boolean res = databaseController.saveKeys(PUB_KEY,SUB_KEY);
-            if (res == false){
+            if (!res){
 
 
                 AlertDialog.Builder builder = new AlertDialog.Builder(this);

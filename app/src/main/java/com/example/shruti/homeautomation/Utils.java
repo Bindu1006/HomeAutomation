@@ -1,9 +1,12 @@
 package com.example.shruti.homeautomation;
 
-import java.io.*;
-import java.net.*;
-import java.util.*;
-//import org.apache.http.conn.util.InetAddressUtils;
+import java.io.BufferedInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.FileInputStream;
+import java.net.InetAddress;
+import java.net.NetworkInterface;
+import java.util.Collections;
+import java.util.List;
 
 /**
  * Created by Vishwas on 4/27/16.
@@ -12,8 +15,6 @@ public class Utils {
 
     /**
      * Convert byte array to hex string
-     * @param bytes
-     * @return
      */
     public static String bytesToHex(byte[] bytes) {
         StringBuilder sbuf = new StringBuilder();
@@ -27,8 +28,8 @@ public class Utils {
 
     /**
      * Get utf8 byte array.
-     * @param str
-     * @return  array of NULL if error was found
+     * param: str
+     * return:  array of NULL if error was found
      */
     public static byte[] getUTF8Bytes(String str) {
         try { return str.getBytes("UTF-8"); } catch (Exception ex) { return null; }
@@ -36,9 +37,9 @@ public class Utils {
 
     /**
      * Load UTF8withBOM or any ansi text file.
-     * @param filename
-     * @return
-     * @throws java.io.IOException
+     * param: filename
+     * return:
+     * throws java.io.IOException
      */
     public static String loadFileAsString(String filename) throws java.io.IOException {
         final int BUFLEN=1024;

@@ -1,39 +1,24 @@
 package com.example.shruti.homeautomation;
 
 import android.app.Dialog;
-import android.content.Context;
-import android.content.SharedPreferences;
-import android.net.DhcpInfo;
 import android.net.wifi.WifiInfo;
 import android.net.wifi.WifiManager;
 import android.os.Bundle;
 import android.os.StrictMode;
-import android.preference.PreferenceManager;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
-//import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.text.format.Formatter;
 import android.util.Log;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.CompoundButton;
 import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.ListView;
-import android.widget.Switch;
-import android.widget.TextView;
 
-import java.io.BufferedReader;
-import java.io.FileReader;
 import java.io.IOException;
-import java.net.InetAddress;
-import java.net.Socket;
-import java.net.UnknownHostException;
 import java.util.ArrayList;
+
 
 public class ConfigureWemoSwitch extends AppCompatActivity {
 
@@ -59,15 +44,16 @@ public class ConfigureWemoSwitch extends AppCompatActivity {
         });
     }
 
+    @SuppressWarnings("deprecation")
     public void refreshSwithes(View view) throws IOException {
         Log.d("REFRESH", "refreshing switches");
 
         databaseController = new DatabaseController(getBaseContext());
-        ArrayList<IPAddressDetails> ipAddressList1 = new ArrayList<IPAddressDetails>();
+        ArrayList<IPAddressDetails> ipAddressList1;
 
         ipAddressList1 = databaseController.getAllDeviceDetails();
 
-        ArrayList<IPAddressDetails> ipAddressList = new ArrayList<IPAddressDetails>();
+        ArrayList<IPAddressDetails> ipAddressList = new ArrayList<>();
 
         IPAddressDetails ipAddressDetails = new IPAddressDetails();
         ipAddressDetails.setDeviceIpAddress("10.0.0.4");
@@ -139,16 +125,6 @@ public class ConfigureWemoSwitch extends AppCompatActivity {
         });
         dialog.show();
     }
-
-
-    public static String getSubnet(String currentIP) {
-        int firstSeparator = currentIP.lastIndexOf("/");
-        int lastSeparator = currentIP.lastIndexOf(".");
-        return currentIP.substring(firstSeparator+1, lastSeparator+1);
-    }
-
-
-
 
 
 }
