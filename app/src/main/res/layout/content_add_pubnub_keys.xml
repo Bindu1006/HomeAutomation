@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto" android:layout_width="match_parent"
+    android:layout_height="match_parent" android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    tools:showIn="@layout/activity_add_pubnub_keys"
+    tools:context="com.example.shruti.homeautomation.AddPubnubKeysActivity">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="60dp"
+        android:text="@string/publishKey"
+        android:textSize="15dp"
+        android:id="@+id/id_publishKey" />
+
+    <EditText
+        android:layout_width="250dp"
+        android:layout_height="wrap_content"
+        android:id="@+id/id_publishKeyTxt"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="50dp"
+        android:textSize="15dp"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="140dp"
+        android:text="@string/subscribeKey"
+        android:textSize="15dp"
+        android:id="@+id/id_subscribeKey" />
+
+    <EditText
+        android:layout_width="250dp"
+        android:layout_height="wrap_content"
+        android:id="@+id/id_subscribeKeyTxt"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="130dp"
+        android:textSize="15dp"/>
+
+    <Button
+        android:layout_width="250dp"
+        android:layout_height="wrap_content"
+        android:id="@+id/saveButtonId"
+        android:layout_marginTop="250dp"
+        android:gravity="center"
+        android:text="@string/saveKeysBtnText"
+        android:background="@color/btnBackground"
+        android:textColor="@color/btnTextColor"
+        android:textSize="@dimen/btnTextSize"
+        android:layout_below="@+id/homePageIconId"
+        android:onClick="savePubnubKeys"
+        android:layout_centerHorizontal="true" />
+
+
+
+
+
+</RelativeLayout>

@@ -1,0 +1,30 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".MainActivity">
+
+    <item android:id="@+id/action_settings"
+        android:title="@string/action_settings"
+        android:orderInCategory="100"
+        app:showAsAction="never" />
+
+    <item android:id="@+id/id_ConfigureLedPins"
+        android:title="@string/menuItem1"
+        android:orderInCategory="100"
+        app:showAsAction="never" />
+
+    <item android:id="@+id/id_configureWemoSwitch"
+        android:title="@string/menuItem2"
+        android:orderInCategory="100"
+        app:showAsAction="never" />
+
+    <item android:id="@+id/id_configureRecording"
+        android:title="@string/menuItem3"
+        android:orderInCategory="100"
+        app:showAsAction="never" />
+
+    <item android:id="@+id/id_addPubnubKeys"
+        android:title="@string/menuItem4"
+        android:orderInCategory="100"
+        app:showAsAction="never" />
+</menu>
