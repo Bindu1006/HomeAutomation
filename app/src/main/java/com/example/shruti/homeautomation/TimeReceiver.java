@@ -3,6 +3,7 @@ package com.example.shruti.homeautomation;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.telephony.SmsManager;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -21,6 +22,8 @@ public class TimeReceiver extends BroadcastReceiver {
     public static final String PUBLISH_KEY = "pub-c-e2930ace-7719-4803-9d9d-339ae326b4e6";
     public static final String SUBSCRIBE_KEY = "sub-c-1d10a854-080e-11e6-996b-0619f8945a4f";
     public static final String CHANNEL = "phue";
+
+    Context context;
 
     public TimeReceiver() {
     }
@@ -111,6 +114,16 @@ public class TimeReceiver extends BroadcastReceiver {
                 public void successCallback(String channel, Object message) {
                     Log.d("PUBNUB","SUBSCRIBE : " + channel + " : "
                             + message.getClass() + " : " + message.toString());
+                    if (message.toString().contains("MOTION_DETECTED")){
+                        Log.d("Motiion","Detected");
+                        databaseController = new DatabaseController(context.getApplicationContext());
+                        String phoneNumber = databaseController.getPhoneNumber();
+                        if (!phoneNumber.equalsIgnoreCase("")){
+                            String smsMessage = "Motion Detected!!!  Please go to the below URL to see the Video: http://especsjsu.dyndns.org:8090/stream.html";
+                            SmsManager.getDefault().sendTextMessage(phoneNumber, null, smsMessage, null,null);
+                        }
+
+                    }
                 }
 
                 @Override

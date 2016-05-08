@@ -7,6 +7,7 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.telephony.SmsManager;
 import android.util.Log;
 import android.view.View;
 import android.widget.CompoundButton;
@@ -44,6 +45,7 @@ public class ConfigureLedPins extends AppCompatActivity {
 
     private long lastUpdate = System.currentTimeMillis();
     private boolean pHueOn = false;
+    DatabaseController databaseController;
 
 
     @Override
@@ -195,6 +197,15 @@ public class ConfigureLedPins extends AppCompatActivity {
                 public void successCallback(String channel, Object message) {
                     Log.d("PUBNUB","SUBSCRIBE : " + channel + " : "
                             + message.getClass() + " : " + message.toString());
+                    if (message.toString().contains("MOTION_DETECTED")) {
+                        Log.d("Motiion", "Detected");
+                        databaseController = new DatabaseController(getApplicationContext());
+                        String phoneNumber = databaseController.getPhoneNumber();
+                        if (!phoneNumber.equalsIgnoreCase("")) {
+                            String smsMessage = "Motion Detected!!!  Please go to the below URL to see the Video: http://especsjsu.dyndns.org:8090/stream.html";
+                            SmsManager.getDefault().sendTextMessage(phoneNumber, null, smsMessage, null, null);
+                        }
+                    }
                 }
 
                 @Override

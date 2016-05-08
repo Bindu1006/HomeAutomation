@@ -111,6 +111,7 @@ public class MainActivity extends AppCompatActivity {
         Intent intent = new Intent(this, VideoStreaming.class);
         databaseController = new DatabaseController(getApplicationContext().getApplicationContext());
         String status = databaseController.getVideoStatus();
+        Log.d(" video status",status);
         intent.putExtra("STATUS",status);
         startActivity(intent);
     }

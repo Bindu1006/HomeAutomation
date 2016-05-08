@@ -3,6 +3,7 @@ package com.example.shruti.homeautomation;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.telephony.SmsManager;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -163,8 +164,17 @@ public class IPAddressAdapter extends ArrayAdapter<IPAddressDetails> {
 
                 @Override
                 public void successCallback(String channel, Object message) {
-                    Log.d("PUBNUB","SUBSCRIBE : " + channel + " : "
+                    Log.d("PUBNUB", "SUBSCRIBE : " + channel + " : "
                             + message.getClass() + " : " + message.toString());
+                    if (message.toString().contains("MOTION_DETECTED")) {
+                        Log.d("Motiion", "Detected");
+                        databaseController = new DatabaseController(getContext().getApplicationContext());
+                        String phoneNumber = databaseController.getPhoneNumber();
+                        if (!phoneNumber.equalsIgnoreCase("")) {
+                            String smsMessage = "Motion Detected!!!  Please go to the below URL to see the Video: http://especsjsu.dyndns.org:8090/stream.html";
+                            SmsManager.getDefault().sendTextMessage(phoneNumber, null, smsMessage, null, null);
+                        }
+                    }
                 }
 
                 @Override

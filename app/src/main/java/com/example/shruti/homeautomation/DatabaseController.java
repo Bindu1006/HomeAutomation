@@ -264,6 +264,7 @@ public class DatabaseController {
                 status = cursor.getString(0);
             } while (cursor.moveToNext());
         }
+        Log.d("from Main",status);
         cursor.close();
         return status;
     }
@@ -317,10 +318,18 @@ public class DatabaseController {
         if(vid != null || !vid.equalsIgnoreCase("")){
             ContentValues videoValues = new ContentValues();
             videoValues.put("VIDEO_STATUS", videoStatus);
-            int rowsUpdated = database.update(VIDEO_TABLE_NAME, videoValues, " VIDEO_ID = " + vid, null);
-            if (rowsUpdated>1){
-                result = true;
-            }
+            Log.d("video status",videoStatus);
+
+             String Update = " UPDATE " +VIDEO_TABLE_NAME+ " set VIDEO_STATUS = \""+videoStatus+"\" where VIDEO_ID = \""+vid+"\"";
+            database.execSQL(Update);
+
+            //Log.d("UPDATED", " " + rowsUpdated);
+
+//            int rowsUpdated = database.update(VIDEO_TABLE_NAME, videoValues, " VIDEO_ID = " + vid, null);
+//            Log.d("rows updated",rowsUpdated+" ");
+//            if (rowsUpdated>1){
+//                result = true;
+//            }
         } else {
             ContentValues videoValues = new ContentValues();
             videoValues.put("VIDEO_ID", "01");
@@ -334,5 +343,50 @@ public class DatabaseController {
 
     }
 
+    public boolean savePhoneNumber(String phoneNumber){
+        boolean result = false;
+        //Check if any data already exists
 
+        database = databaseHelper.getWritableDatabase();
+        String retrieveQuery = "SELECT VIDEO_ID FROM " + VIDEO_TABLE_NAME;
+        Cursor cursor      = database.rawQuery(retrieveQuery, null);
+        String vid = "";
+
+        if (cursor.moveToFirst()) {
+            do {
+                vid = cursor.getString(0);
+            } while (cursor.moveToNext());
+        }
+
+        if(vid != null || !vid.equalsIgnoreCase("")){
+            ContentValues videoValues = new ContentValues();
+            videoValues.put("PHONE_NUMBER", phoneNumber);
+            Log.d("Set phone ",phoneNumber);
+
+            String Update = " UPDATE " +VIDEO_TABLE_NAME+ " set PHONE_NUMBER = \""+phoneNumber+"\" where VIDEO_ID = \""+vid+"\"";
+            database.execSQL(Update);
+            result = true;
+        } else {
+            result = false;
+        }
+        return result;
+
+    }
+
+    public String getPhoneNumber(){
+        Log.d("DATABASE","get Phone Number");
+
+        database = databaseHelper.getWritableDatabase();
+        String retrieveQuery = "SELECT PHONE_NUMBER FROM " + VIDEO_TABLE_NAME;
+        Cursor cursor      = database.rawQuery(retrieveQuery, null);
+        String phoneNumber = "";
+
+        if (cursor.moveToFirst()) {
+            do {
+                phoneNumber = cursor.getString(0);
+            } while (cursor.moveToNext());
+        }
+        return phoneNumber;
+
+    }
 }

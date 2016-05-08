@@ -17,9 +17,17 @@ xmlns:app="http://schemas.android.com/apk/res-auto"
         android:id="@+id/button_video"
         android:layout_width="120dp"
         android:layout_height="80dp"
+        android:onClick="startVideo"
         android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="false"
-        android:onClick="startVideo"></Button>
+        android:layout_alignParentStart="true"></Button>
+
+    <Button android:text="Set Number"
+        android:id="@+id/button_setNum"
+        android:layout_width="120dp"
+        android:layout_height="80dp"
+        android:onClick="setNumber"
+        android:layout_above="@+id/id_videoStatus"
+        android:layout_toEndOf="@+id/id_videoStatus"></Button>
 
     <TextView
         android:layout_width="wrap_content"
@@ -27,10 +35,11 @@ xmlns:app="http://schemas.android.com/apk/res-auto"
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:text="Video Status: "
         android:id="@+id/id_videoStatus"
-        android:layout_below="@+id/timePicker"
-        android:layout_toRightOf="@+id/button_video"
-        android:layout_marginTop="20dp"
-        android:layout_marginLeft="30dp"/>
+        android:layout_marginTop="78dp"
+        android:layout_marginLeft="30dp"
+        android:layout_marginStart="59dp"
+        android:layout_below="@+id/button_video"
+        android:layout_alignParentStart="true" />
 
     <Switch
         android:layout_width="60dp"
@@ -40,16 +49,29 @@ xmlns:app="http://schemas.android.com/apk/res-auto"
         android:textOff="@string/switchOff"
         android:showText="true"
         android:thumbTextPadding="3dp"
-        android:layout_toRightOf="@+id/id_videoStatus"
-        android:layout_below="@+id/timePicker"
         android:layout_marginLeft="10dp"
-        android:textColor="#000000"/>
+        android:textColor="#000000"
+        android:layout_toRightOf="@+id/id_videoStatus"
+        android:layout_marginTop="140dp"
+        android:layout_marginStart="34dp"
+        />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text=""
+        android:id="@+id/id_videoURL"
+        android:layout_marginTop="230dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginStart="20dp"
+        android:layout_alignParentStart="true" />
 
     <com.example.shruti.homeautomation.PlayerFiles.PlayerView
         android:id="@+id/videoView1"
         android:layout_width="fill_parent"
-        android:layout_marginTop="100dp"
-        android:layout_height="500dp">
+        android:layout_marginTop="300dp"
+        android:layout_height="200dp">
 
     </com.example.shruti.homeautomation.PlayerFiles.PlayerView>
 
