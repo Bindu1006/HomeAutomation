@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+        <!--<TextView-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_marginTop="30dp"-->
+            <!--android:text="Add Phone Number"-->
+            <!--android:textSize="15dp"-->
+            <!--android:id="@+id/OldMsgId" />-->
+
+
+    </RelativeLayout>
+
+    <!--<TextView-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_marginTop="50dp"-->
+        <!--android:textSize="15dp"-->
+        <!--android:id="@+id/id_phoneNumber" />-->
+
+    <EditText
+        android:layout_width="350dp"
+        android:layout_height="wrap_content"
+        android:id="@+id/id_phoneNumber"
+        android:layout_marginTop="40dp"
+        android:layout_alignParentEnd="true"
+        android:textSize="15dp"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="60dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:text="Note:    Remove the number entered and save to cancel SMS notification"
+        android:textSize="15dp"
+        android:textColor="#ff0000"
+        android:id="@+id/OldMsgId" />
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <Button
+            android:layout_width="160dp"
+            android:layout_height="wrap_content"
+            android:id="@+id/id_saveButton"
+            android:layout_marginTop="50dp"
+            android:layout_marginLeft="20dp"
+            android:text="Save Number"
+            android:background="@color/btnBackground"
+            android:textColor="@color/btnTextColor"
+            android:textSize="@dimen/btnTextSize"/>
+
+        <Button
+            android:layout_width="160dp"
+            android:layout_height="wrap_content"
+            android:id="@+id/id_cancelButton"
+            android:layout_marginLeft="20dp"
+            android:text="@string/cancelBtnText"
+            android:layout_marginTop="50dp"
+            android:layout_toRightOf="@+id/id_saveButton"
+            android:background="@color/btnBackground"
+            android:textColor="@color/btnTextColor"
+            android:textSize="@dimen/btnTextSize"/>
+
+    </RelativeLayout>
+
+
+
+</LinearLayout>
