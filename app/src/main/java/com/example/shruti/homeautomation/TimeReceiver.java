@@ -123,11 +123,11 @@ public class TimeReceiver extends BroadcastReceiver {
                         databaseController = new DatabaseController(context.getApplicationContext());
                         String phoneNumber = databaseController.getPhoneNumber();
                         if (!phoneNumber.equalsIgnoreCase("")){
-                            String smsMessage = "Motion Detected!!!  Please go to the below URL to see the Video: http://especsjsu.dyndns.org:8090/stream.html";
+                            String smsMessage = "Motion Detected!!!  Please go to the below URL to see the Video: http://pihomesjsu.dyndns.org:8090/stream.html";
                             long time = System.currentTimeMillis(); //System.currentTimeMillis() + 1000*60*30;
                             boolean result = databaseController.setMessageSentTime(time);
                             if (result){
-                                SmsManager.getDefault().sendTextMessage(phoneNumber, null, smsMessage, null,null);
+
                             }
 
                         }

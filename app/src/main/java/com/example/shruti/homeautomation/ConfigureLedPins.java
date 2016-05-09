@@ -204,7 +204,8 @@ public class ConfigureLedPins extends AppCompatActivity {
                         databaseController = new DatabaseController(getApplicationContext());
                         String phoneNumber = databaseController.getPhoneNumber();
                         if (!phoneNumber.equalsIgnoreCase("")){
-                            String smsMessage = "Motion Detected!!!  Please go to the below URL to see the Video: http://especsjsu.dyndns.org:8090/stream.html";
+                            //String smsMessage = R.string.smsText;
+                           String smsMessage = "Motion Detected!!!  Please go to the below URL to see the Video: http://pihomesjsu.dyndns.org:8090/stream.html";
                             long time = System.currentTimeMillis(); //System.currentTimeMillis() + 1000*60*30;
                             boolean result = databaseController.setMessageSentTime(time);
                             Log.d("SMS send",result+" ");

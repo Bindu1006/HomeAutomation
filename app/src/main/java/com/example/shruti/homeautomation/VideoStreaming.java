@@ -72,7 +72,8 @@ public class VideoStreaming extends AppCompatActivity {
             } else if (status.equalsIgnoreCase("VIDEO_ON")) {
                 videoSwitch.setChecked(true);
                 TextView videoURL = (TextView) findViewById(R.id.id_videoURL);
-                videoURL.setText("http://especsjsu.dyndns.org:8090/stream.html");
+                videoURL.setText(R.string.videoUrl);
+//                videoURL.setText("http://sjsu.dyndns.org:8090/stream.html");
             }
         }
         initPubnub();
@@ -92,8 +93,9 @@ public class VideoStreaming extends AppCompatActivity {
                     String mode = "VIDEO";
                     publish(switchType, mode);
                     TextView videoURL = (TextView) findViewById(R.id.id_videoURL);
-                    videoURL.setText("http://especsjsu.dyndns.org:8090/stream.html");
-                    Log.d("Switch Clicked :: ", " ON ");
+                    videoURL.setText(R.string.videoUrl);
+                    //videoURL.setText("http://pihomesjsu.dyndns.org:8090/stream.html");
+                            Log.d("Switch Clicked :: ", " ON ");
                 } else {
                     boolean result = databaseController.setVideoStatus("OFF");
                     String switchType = "OFF";
@@ -181,7 +183,7 @@ public class VideoStreaming extends AppCompatActivity {
                         databaseController = new DatabaseController(getApplicationContext());
                         String phoneNumber = databaseController.getPhoneNumber();
                         if (!phoneNumber.equalsIgnoreCase("")){
-                            String smsMessage = "Motion Detected!!!  Please go to the below URL to see the Video: http://especsjsu.dyndns.org:8090/stream.html";
+                            String smsMessage = "Motion Detected!!!  Please go to the below URL to see the Video: http://pihomesjsu.dyndns.org:8090/stream.html";
                             long time = System.currentTimeMillis(); //System.currentTimeMillis() + 1000*60*30;
                             boolean result = databaseController.setMessageSentTime(time);
                             if (result){
@@ -214,42 +216,6 @@ public class VideoStreaming extends AppCompatActivity {
         Log.d("Video","Open settings");
     }
 
-//    public void startVideo(View view) {
-//        final Switch switch_status = (Switch) findViewById(R.id.id_videoStatusSwitch);
-//        boolean switchStatus = switch_status.getShowText();
-//        if(!switchStatus) {
-//            AlertDialog alertDialog = new AlertDialog.Builder(VideoStreaming.this).create();
-//            alertDialog.setTitle("ERROR");
-//            alertDialog.setMessage("Please set the video configuration ON to watch the video!!");
-//            alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "OK",
-//                    new DialogInterface.OnClickListener() {
-//                        public void onClick(DialogInterface dialog, int which) {
-//                            dialog.dismiss();
-//                        }
-//                    });
-//            alertDialog.show();
-//        } else {
-//
-//            if (videoView == null)
-//                showPlayer();
-//            else {
-//                if (videoView.isPlaying()) {
-//                    Toast.makeText(getApplicationContext(), "video is already playing, stopping now...", Toast.LENGTH_SHORT).show();
-////                Log.v(TAG, "video is already playing, stopping now...");
-//                    button_video = (Button) findViewById(R.id.button_video);
-//                    button_video.setText(R.string.video_start);
-//                    videoView.stopPlayback();
-//                } else {
-//                    Toast.makeText(getApplicationContext(), "video is not playing, starting it now...", Toast.LENGTH_SHORT).show();
-////                Log.v(TAG, "video is not playing, starting it now...");
-//                    button_video = (Button) findViewById(R.id.button_video);
-//                    button_video.setText(R.string.video_stop);
-//                    videoView.startPlayback();
-//                }
-//            }
-//        }
-//
-//    }
 
     public void setNumber(View view){
 
@@ -292,28 +258,6 @@ public class VideoStreaming extends AppCompatActivity {
 
     }
 
-//    private void showPlayer() {
-//        //VideoView videoView = (VideoView) findViewById(R.id.videoView1);
-//        String url = prefs.getString("video_url", "");
-//        Log.d("Video", "starting video playback: " + url);
-//        button_video.setText(R.string.video_stop);
-//
-//        videoView = (PlayerView) findViewById(R.id.videoView1);
-//        MediaController mediaController = new MediaController(this);
-//        mediaController.setAnchorView(videoView);
-//
-//        Uri video = Uri.parse(url);
-//        videoView.setMediaController(mediaController);
-//
-//        videoView.setSource(PlayerInputStream.read(url, getCacheDir()));
-//        videoView.start();
-//        //MjpegView mv = new MjpegView(this);
-//
-//        //setContentView(mv);
-//        //videoView.setVideoPath(MjpegInputStream.read(url));
-//        //videoView.setDisplayMode(MjpegView.SIZE_BEST_FIT);
-//        //videoView.showFps(false);
-//    }
 
 
 

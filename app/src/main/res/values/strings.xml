@@ -57,4 +57,7 @@
     <string name="saveKeysBtnText">Save Keys</string>
     <string name="title_activity_view_device_scheduler">ViewDeviceScheduler</string>
 
+    <string name="videoUrl">http://pihomesjsu.dyndns.org:8090/stream.html</string>
+    <string name="smsText">Motion Detected!!!  Please go to the below URL to see the Video: http://especsjsu.dyndns.org:8090/stream.html</string>
+
 </resources>

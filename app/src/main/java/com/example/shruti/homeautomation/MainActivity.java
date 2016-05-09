@@ -49,33 +49,6 @@ public class MainActivity extends AppCompatActivity {
             //intent.putExtra("USERLIST",userDetailsList);
             startActivity(intent);
         }
-//
-//        if (id == R.id.id_ConfigureLedPins) {
-//            Log.d("MainActivity   ::: ", " Configure Led Pins");
-//
-//            Intent intent = new Intent(this, ConfigureLedPins.class);
-//            startActivity(intent);
-//
-////            startActivityForResult(new Intent(Intent.ACTION_PICK, ContactsContract.Contacts.CONTENT_URI), PICK_CONTACT);
-//        }
-//
-//        if (id == R.id.id_configureWemoSwitch) {
-//            Log.d("MainActivity   ::: ", " Configure Led Pins");
-//            Intent intent = new Intent(this, ConfigureWemoSwitch.class);
-//            startActivity(intent);
-//        }
-//
-//        if (id == R.id.id_configureRecording) {
-//            Log.d("MainActivity   ::: ", " Configure Recording");
-//            Intent intent = new Intent(this, VideoStreaming.class);
-//            startActivity(intent);
-//        }
-//
-//        if (id == R.id.id_addPubnubKeys) {
-//            Log.d("MainActivity   ::: ", " Configure Recording");
-//            Intent intent = new Intent(this, AddPubnubKeysActivity.class);
-//            startActivity(intent);
-//        }
 
         if (id == R.id.id_getStarted) {
             Log.d("MainActivity   ::: ", " Get Started");
@@ -123,4 +96,6 @@ public class MainActivity extends AppCompatActivity {
 
         startActivity(intent);
     }
+
+
 }
