@@ -19,7 +19,7 @@
         android:id="@+id/id_publishKey" />
 
     <EditText
-        android:layout_width="250dp"
+        android:layout_width="230dp"
         android:layout_height="wrap_content"
         android:id="@+id/id_publishKeyTxt"
         android:layout_alignParentEnd="true"
@@ -35,7 +35,7 @@
         android:id="@+id/id_subscribeKey" />
 
     <EditText
-        android:layout_width="250dp"
+        android:layout_width="230dp"
         android:layout_height="wrap_content"
         android:id="@+id/id_subscribeKeyTxt"
         android:layout_alignParentEnd="true"
@@ -52,9 +52,9 @@
         android:background="@color/btnBackground"
         android:textColor="@color/btnTextColor"
         android:textSize="@dimen/btnTextSize"
-        android:layout_below="@+id/homePageIconId"
         android:onClick="savePubnubKeys"
-        android:layout_centerHorizontal="true" />
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="20dp"/>
 
 
 

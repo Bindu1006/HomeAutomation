@@ -39,8 +39,8 @@ public class ConfigureLedPins extends AppCompatActivity {
     SeekBar redSeek, blueSeek, greenSeek;
 
     private Pubnub pubnub;
-    public static final String PUBLISH_KEY = "pub-c-e2930ace-7719-4803-9d9d-339ae326b4e6";
-    public static final String SUBSCRIBE_KEY = "sub-c-1d10a854-080e-11e6-996b-0619f8945a4f";
+//    public static final String PUBLISH_KEY = "pub-c-e2930ace-7719-4803-9d9d-339ae326b4e6";
+//    public static final String SUBSCRIBE_KEY = "sub-c-1d10a854-080e-11e6-996b-0619f8945a4f";
     public static final String CHANNEL = "phue";
 
     private long lastUpdate = System.currentTimeMillis();
@@ -136,14 +136,14 @@ public class ConfigureLedPins extends AppCompatActivity {
         });
 
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
+//        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+//        fab.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
+//                        .setAction("Action", null).show();
+//            }
+//        });
     }
 
     public void setRGBSeekBar(int red, int blue, int green){
@@ -165,7 +165,9 @@ public class ConfigureLedPins extends AppCompatActivity {
     }
 
     public void initPubnub(){
-        this.pubnub = new Pubnub(PUBLISH_KEY,SUBSCRIBE_KEY);
+        databaseController = new DatabaseController(getBaseContext());
+        PubNubKeysBO pubnubKeys = databaseController.getKeys();
+        this.pubnub = new Pubnub(pubnubKeys.getPubKey(),pubnubKeys.getSubKey());
         this.pubnub.setUUID("AndroidPHue");
         subscribe();
     }
@@ -198,12 +200,18 @@ public class ConfigureLedPins extends AppCompatActivity {
                     Log.d("PUBNUB","SUBSCRIBE : " + channel + " : "
                             + message.getClass() + " : " + message.toString());
                     if (message.toString().contains("MOTION_DETECTED")) {
-                        Log.d("Motiion", "Detected");
+                        Log.d("Motiion","Detected");
                         databaseController = new DatabaseController(getApplicationContext());
                         String phoneNumber = databaseController.getPhoneNumber();
-                        if (!phoneNumber.equalsIgnoreCase("")) {
+                        if (!phoneNumber.equalsIgnoreCase("")){
                             String smsMessage = "Motion Detected!!!  Please go to the below URL to see the Video: http://especsjsu.dyndns.org:8090/stream.html";
-                            SmsManager.getDefault().sendTextMessage(phoneNumber, null, smsMessage, null, null);
+                            long time = System.currentTimeMillis(); //System.currentTimeMillis() + 1000*60*30;
+                            boolean result = databaseController.setMessageSentTime(time);
+                            Log.d("SMS send",result+" ");
+                            if (result){
+                                SmsManager.getDefault().sendTextMessage(phoneNumber, null, smsMessage, null,null);
+                            }
+
                         }
                     }
                 }

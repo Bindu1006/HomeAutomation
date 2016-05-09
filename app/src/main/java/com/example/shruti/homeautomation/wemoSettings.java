@@ -11,7 +11,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
+import android.widget.CompoundButton;
 import android.widget.Switch;
+import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
@@ -24,6 +26,7 @@ public class wemoSettings extends AppCompatActivity {
     PendingIntent pending_intent;
     AlarmManager my_alarm_manager;
     DatabaseController databaseController;
+    boolean alarmStatus;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,12 +35,24 @@ public class wemoSettings extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
+        final Switch alarmSwitch = (Switch) findViewById(R.id.id_alarmSwitch);
+        alarmSwitch.setChecked(false);
+
+        alarmSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+
             @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+            public void onCheckedChanged(CompoundButton buttonView,
+                                         boolean isChecked) {
+                boolean noText = false;
+
+                if (isChecked) {
+                    alarmStatus = true;
+                    Log.d("Alarm Switch :: ", " ON ");
+                } else {
+                    alarmStatus = false;
+                    Log.d("Alarm Switch :: ", " OFF ");
+                }
+
             }
         });
 
@@ -50,7 +65,7 @@ public class wemoSettings extends AppCompatActivity {
     public void setTime(View view) {
 
         Bundle bundle = getIntent().getExtras();
-        IPAddressDetails deviceDetails = (IPAddressDetails) bundle.getSerializable("DeviceDetails");
+        final IPAddressDetails deviceDetails = (IPAddressDetails) bundle.getSerializable("DeviceDetails");
         Log.d("settingsPage",deviceDetails+" ");
 
         //create an instance of calendar
@@ -86,24 +101,29 @@ public class wemoSettings extends AppCompatActivity {
 
         Toast.makeText(getApplicationContext(), "Alarm set at "+hour_value +":"+minute_value, Toast.LENGTH_LONG).show();
 
-        final Switch switch_status = (Switch) findViewById(R.id.id_alarmSwitch);
-        boolean switchStatus = switch_status.getShowText();
+//        final Switch switch_status = (Switch) findViewById(R.id.id_alarmSwitch);
+//        boolean set = switch_status.getShowText();
+       // boolean switchStatus = switch_status.getShowText();
 
-        String switchStatusTxt = "OFF";
-        if (switchStatus) {
-            switchStatusTxt = "ON";
+        //String switchStatusTxt = "OFF";
+//        if (switchStatus) {
+//            switchStatusTxt = "ON";
+//        }
+//        Log.d("SWITCH STATUS",switchStatusTxt + " ");
+        String switchStatus = "OFF";
+        if(alarmStatus){
+            switchStatus = "ON";
         }
-        Log.d("SWITCH STATUS",switchStatusTxt + " ");
+
+        databaseController = new DatabaseController(getBaseContext());
+        databaseController.setAlarmForDevice(alarmSetTime, deviceDetails.getDeviceName(), deviceDetails.getDeviceIpAddress(), switchStatus);
 
         AlarmManager service = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
         Intent i = new Intent(wemoSettings.this, TimeReceiver.class);
         i.putExtra("DEVICEDETAILS", deviceDetails);
-        i.putExtra("SWITCHSTATUS", switchStatusTxt);
-        i.putExtra("ALARMTIME",alarmSetTime);
+        i.putExtra("SWITCHSTATUS", switchStatus);
+        i.putExtra("ALARMTIME", alarmSetTime);
         PendingIntent pending = PendingIntent.getBroadcast(wemoSettings.this, 0, i, PendingIntent.FLAG_UPDATE_CURRENT);
-
-        databaseController = new DatabaseController(getBaseContext());
-        databaseController.setAlarmForDevice(alarmSetTime,deviceDetails.getDeviceName(),deviceDetails.getDeviceIpAddress(),switchStatusTxt);
 
         service.set(AlarmManager.RTC, calendar.getTimeInMillis() , pending);
                 //setInexactRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), 1000 * 20, pending);

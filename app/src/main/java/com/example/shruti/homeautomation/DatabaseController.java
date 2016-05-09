@@ -11,7 +11,7 @@ import android.util.Log;
 import java.util.ArrayList;
 
 /**
- * Created by Vishwas on 5/1/16.
+ * Created by Shruti on 5/1/16.
  */
 public class DatabaseController {
 
@@ -21,7 +21,7 @@ public class DatabaseController {
     public static final String KEYS_TABLE_NAME = "PUBNUB_KEYS_DETAILS";
     public static final String VIDEO_TABLE_NAME = "VIDEO_STATUS_DETAILS";
 
-    public static final String VIDEO_CREATE_QUERY = "create table VIDEO_STATUS_DETAILS (VIDEO_ID text PRIMARY KEY, VIDEO_STATUS text not null, PHONE_NUMBER text);";
+    public static final String VIDEO_CREATE_QUERY = "create table VIDEO_STATUS_DETAILS (VIDEO_ID text PRIMARY KEY, VIDEO_STATUS text not null, PHONE_NUMBER text, MESSAGE_SENT text);";
 
     public static final String KEYS_CREATE_QUERY = "create table PUBNUB_KEYS_DETAILS (PUBLISH_KEYS text PRIMARY KEY, SUBSCRIBE_KEYS text not null);";
 
@@ -102,6 +102,7 @@ public class DatabaseController {
         deviceValues.put("DEVICE_STATUS", deviceDetails.getDeviceStatus());
 
         database.insertOrThrow(WEMO_TABLE_NAME, null, deviceValues);
+        database.close();
 
     }
 
@@ -127,6 +128,7 @@ public class DatabaseController {
         Log.d("DATA : ", "LIST :" + deviceDetailsList);
 
         cursor.close();
+        database.close();
         return deviceDetailsList;
 
     }
@@ -150,6 +152,7 @@ public class DatabaseController {
 //        database.execSQL(Update);
         int rowsUpdated = database.update(WEMO_TABLE_NAME, values, " DEVICE_IP = \"" + ipAddr +"\"", null);
         Log.d("UPDATED", " " + rowsUpdated);
+        database.close();
 
     }
 
@@ -159,7 +162,6 @@ public class DatabaseController {
         String SUB_KEY= "";
 
         //Check if any data already exists
-
         String countQuery = "SELECT  * FROM " + KEYS_TABLE_NAME;
         database = databaseHelper.getWritableDatabase();
         Cursor cursor = database.rawQuery(countQuery, null);
@@ -177,7 +179,7 @@ public class DatabaseController {
             result = true;
         }
 
-
+        database.close();
         return result;
     }
 
@@ -191,6 +193,31 @@ public class DatabaseController {
         deviceValues.put("SUBSCRIBE_KEYS", subKey);
 
         database.insertOrThrow(KEYS_TABLE_NAME, null, deviceValues);
+        database.close();
+
+    }
+
+    public PubNubKeysBO getKeys(){
+        database = databaseHelper.getWritableDatabase();
+
+        String selectQuery = "SELECT * FROM " + KEYS_TABLE_NAME;
+        Cursor cursor      = database.rawQuery(selectQuery, null);
+        PubNubKeysBO keys = new PubNubKeysBO();
+        String[] data      = null;
+
+
+        if (cursor.moveToFirst()) {
+            do {
+
+                keys.setPubKey(cursor.getString(0));
+                keys.setSubKey(cursor.getString(1));
+
+            } while (cursor.moveToNext());
+        }
+        cursor.close();
+        database.close();
+
+        return keys;
 
     }
 
@@ -211,14 +238,14 @@ public class DatabaseController {
         alarmDevice.put("ALARM_TIME",alarmSetTime);
 
         database.insertOrThrow(ALARM_TABLE_NAME, null, alarmDevice);
-
+        database.close();
     }
 
     public void deleteAlarmEntry(DeviceSchedulerBO schedulerDetails) {
         Log.d("Delete Alarm Entry", schedulerDetails + " ");
 
         database = databaseHelper.getWritableDatabase();
-        database.delete(ALARM_TABLE_NAME, " DEVICE_IP =" + schedulerDetails.getDeviceIP() + " and ALARM_TIME =" + schedulerDetails.getAlarmTime(), null);
+        database.delete(ALARM_TABLE_NAME, " DEVICE_IP = \"" + schedulerDetails.getDeviceIP() + "\" and ALARM_TIME = \"" + schedulerDetails.getAlarmTime() + "\"", null);
         database.close();
 
     }
@@ -248,6 +275,7 @@ public class DatabaseController {
         Log.d("DATA : ", "LIST :" + deviceSchedulerList);
 
         cursor.close();
+        database.close();
         return deviceSchedulerList;
     }
 
@@ -266,6 +294,7 @@ public class DatabaseController {
         }
         Log.d("from Main",status);
         cursor.close();
+        database.close();
         return status;
     }
 
@@ -289,7 +318,7 @@ public class DatabaseController {
             database.insertOrThrow(VIDEO_TABLE_NAME, null, videoValues);
             result = true;
         }
-
+        database.close();
         return result;
 
     }
@@ -322,14 +351,6 @@ public class DatabaseController {
 
              String Update = " UPDATE " +VIDEO_TABLE_NAME+ " set VIDEO_STATUS = \""+videoStatus+"\" where VIDEO_ID = \""+vid+"\"";
             database.execSQL(Update);
-
-            //Log.d("UPDATED", " " + rowsUpdated);
-
-//            int rowsUpdated = database.update(VIDEO_TABLE_NAME, videoValues, " VIDEO_ID = " + vid, null);
-//            Log.d("rows updated",rowsUpdated+" ");
-//            if (rowsUpdated>1){
-//                result = true;
-//            }
         } else {
             ContentValues videoValues = new ContentValues();
             videoValues.put("VIDEO_ID", "01");
@@ -338,6 +359,7 @@ public class DatabaseController {
             database.insertOrThrow(VIDEO_TABLE_NAME, null, videoValues);
             result = true;
         }
+        database.close();
         cursor.close();
         return result;
 
@@ -364,11 +386,14 @@ public class DatabaseController {
             Log.d("Set phone ",phoneNumber);
 
             String Update = " UPDATE " +VIDEO_TABLE_NAME+ " set PHONE_NUMBER = \""+phoneNumber+"\" where VIDEO_ID = \""+vid+"\"";
+
             database.execSQL(Update);
             result = true;
         } else {
             result = false;
         }
+        cursor.close();
+        database.close();
         return result;
 
     }
@@ -386,7 +411,64 @@ public class DatabaseController {
                 phoneNumber = cursor.getString(0);
             } while (cursor.moveToNext());
         }
+        cursor.close();
+        database.close();
         return phoneNumber;
+
+    }
+
+    public  boolean setMessageSentTime(long time){
+        Log.d("DATABASE","set time for send msg");
+
+        boolean result = false;
+
+        //Check if any data already exists
+        String retriveQuery = "SELECT MESSAGE_SENT FROM " + VIDEO_TABLE_NAME;
+        database = databaseHelper.getWritableDatabase();
+        Cursor cursor = database.rawQuery(retriveQuery, null);
+        int cnt = cursor.getCount();
+
+        String msg_time = "";
+
+        if(cnt == 1){
+            if (cursor.moveToFirst()) {
+                do {
+                    msg_time = cursor.getString(0);
+                } while (cursor.moveToNext());
+            }
+            if (msg_time != null){
+                long storedTime = Long.parseLong(msg_time);
+                if (System.currentTimeMillis() > storedTime + 1000*60*30){
+                    result = true;
+                }
+
+            }
+            else {
+
+                ContentValues videoValues = new ContentValues();
+                videoValues.put("MESSAGE_SENT", time);
+
+                int rowsUpdated = database.update(VIDEO_TABLE_NAME, videoValues, null, null);
+                // database.insertOrThrow(VIDEO_TABLE_NAME, null, videoValues);
+                result = true;
+
+            }
+
+//            if (System.currentTimeMillis() > storedTime + 1000*60*30);
+//            result = true;
+        } else if(cnt == 0){
+
+            ContentValues videoValues = new ContentValues();
+            videoValues.put("MESSAGE_SENT", time);
+
+            int rowsUpdated = database.update(VIDEO_TABLE_NAME, videoValues, null, null);
+           // database.insertOrThrow(VIDEO_TABLE_NAME, null, videoValues);
+            result = true;
+        }
+        cursor.close();
+        database.close();
+        return result;
+
 
     }
 }

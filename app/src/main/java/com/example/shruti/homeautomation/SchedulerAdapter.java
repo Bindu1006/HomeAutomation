@@ -1,6 +1,7 @@
 package com.example.shruti.homeautomation;
 
 import android.content.Context;
+import android.content.Intent;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -48,8 +49,9 @@ public class SchedulerAdapter extends ArrayAdapter<DeviceSchedulerBO> {
         if(deviceSchedulerBO.getDeviceStatus().equalsIgnoreCase("DEVICE_ON")) {
             deviceStatus.setText("ON");
         } else if (deviceSchedulerBO.getDeviceStatus().equalsIgnoreCase("DEVICE_OFF")) {
-            schedulerTime.setText("OFF");
+            deviceStatus.setText("OFF");
         }
+        schedulerTime.setText(deviceSchedulerBO.getAlarmTime());
 
         ImageView imageView = (ImageView) convertView.findViewById(R.id.id_deleteScheduler);
 
@@ -62,6 +64,17 @@ public class SchedulerAdapter extends ArrayAdapter<DeviceSchedulerBO> {
                 //Delete the details form the database
                 databaseController = new DatabaseController(getContext().getApplicationContext());
                 databaseController.deleteAlarmEntry(deviceSchedulerBO);
+
+
+                Log.d("settingsPage"," refresh Schedule ");
+                DeviceSchedulerBO deviceScheduler = new DeviceSchedulerBO();
+                ArrayList<DeviceSchedulerBO> deviceSchedulerList ;
+                deviceSchedulerList = databaseController.viewSchedule();
+
+                Intent intent = new Intent(thisContext, ViewDeviceScheduler.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                intent.putExtra("DEVICESCHEDULERLIST", deviceSchedulerList);
+                thisContext.startActivity(intent);
 
                 Toast.makeText(getContext(), "Deleted Entry", Toast.LENGTH_LONG).show();
 

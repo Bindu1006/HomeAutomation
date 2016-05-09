@@ -34,8 +34,8 @@ import org.json.JSONObject;
 public class VideoStreaming extends AppCompatActivity {
 
     private Pubnub pubnub;
-    public static final String PUBLISH_KEY = "pub-c-e2930ace-7719-4803-9d9d-339ae326b4e6";
-    public static final String SUBSCRIBE_KEY = "sub-c-1d10a854-080e-11e6-996b-0619f8945a4f";
+//    public static final String PUBLISH_KEY = "pub-c-e2930ace-7719-4803-9d9d-339ae326b4e6";
+//    public static final String SUBSCRIBE_KEY = "sub-c-1d10a854-080e-11e6-996b-0619f8945a4f";
     public static final String CHANNEL = "phue";
 
     DatabaseController databaseController;
@@ -107,14 +107,14 @@ public class VideoStreaming extends AppCompatActivity {
             }
         });
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
+//        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+//        fab.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
+//                        .setAction("Action", null).show();
+//            }
+//        });
     }
 
     public void publish(String switchType, String mode){
@@ -138,7 +138,9 @@ public class VideoStreaming extends AppCompatActivity {
     }
 
     public void initPubnub(){
-        this.pubnub = new Pubnub(PUBLISH_KEY,SUBSCRIBE_KEY);
+        databaseController = new DatabaseController(getBaseContext());
+        PubNubKeysBO pubnubKeys = databaseController.getKeys();
+        this.pubnub = new Pubnub(pubnubKeys.getPubKey(),pubnubKeys.getSubKey());
         this.pubnub.setUUID("AndroidPHue");
         subscribe();
     }
@@ -175,12 +177,17 @@ public class VideoStreaming extends AppCompatActivity {
                     Log.d("PUBNUB","SUBSCRIBE : " + channel + " : "
                             + message.getClass() + " : " + message.toString());
                     if (message.toString().contains("MOTION_DETECTED")) {
-                        Log.d("Motiion", "Detected");
+                        Log.d("Motion","Detected");
                         databaseController = new DatabaseController(getApplicationContext());
                         String phoneNumber = databaseController.getPhoneNumber();
-                        if (!phoneNumber.equalsIgnoreCase("")) {
+                        if (!phoneNumber.equalsIgnoreCase("")){
                             String smsMessage = "Motion Detected!!!  Please go to the below URL to see the Video: http://especsjsu.dyndns.org:8090/stream.html";
-                            SmsManager.getDefault().sendTextMessage(phoneNumber, null, smsMessage, null, null);
+                            long time = System.currentTimeMillis(); //System.currentTimeMillis() + 1000*60*30;
+                            boolean result = databaseController.setMessageSentTime(time);
+                            if (result){
+                                SmsManager.getDefault().sendTextMessage(phoneNumber, null, smsMessage, null,null);
+                            }
+
                         }
                     }
                 }
@@ -207,42 +214,42 @@ public class VideoStreaming extends AppCompatActivity {
         Log.d("Video","Open settings");
     }
 
-    public void startVideo(View view) {
-        final Switch switch_status = (Switch) findViewById(R.id.id_videoStatusSwitch);
-        boolean switchStatus = switch_status.getShowText();
-        if(!switchStatus) {
-            AlertDialog alertDialog = new AlertDialog.Builder(VideoStreaming.this).create();
-            alertDialog.setTitle("ERROR");
-            alertDialog.setMessage("Please set the video configuration ON to watch the video!!");
-            alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "OK",
-                    new DialogInterface.OnClickListener() {
-                        public void onClick(DialogInterface dialog, int which) {
-                            dialog.dismiss();
-                        }
-                    });
-            alertDialog.show();
-        } else {
-
-            if (videoView == null)
-                showPlayer();
-            else {
-                if (videoView.isPlaying()) {
-                    Toast.makeText(getApplicationContext(), "video is already playing, stopping now...", Toast.LENGTH_SHORT).show();
-//                Log.v(TAG, "video is already playing, stopping now...");
-                    button_video = (Button) findViewById(R.id.button_video);
-                    button_video.setText(R.string.video_start);
-                    videoView.stopPlayback();
-                } else {
-                    Toast.makeText(getApplicationContext(), "video is not playing, starting it now...", Toast.LENGTH_SHORT).show();
-//                Log.v(TAG, "video is not playing, starting it now...");
-                    button_video = (Button) findViewById(R.id.button_video);
-                    button_video.setText(R.string.video_stop);
-                    videoView.startPlayback();
-                }
-            }
-        }
-
-    }
+//    public void startVideo(View view) {
+//        final Switch switch_status = (Switch) findViewById(R.id.id_videoStatusSwitch);
+//        boolean switchStatus = switch_status.getShowText();
+//        if(!switchStatus) {
+//            AlertDialog alertDialog = new AlertDialog.Builder(VideoStreaming.this).create();
+//            alertDialog.setTitle("ERROR");
+//            alertDialog.setMessage("Please set the video configuration ON to watch the video!!");
+//            alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "OK",
+//                    new DialogInterface.OnClickListener() {
+//                        public void onClick(DialogInterface dialog, int which) {
+//                            dialog.dismiss();
+//                        }
+//                    });
+//            alertDialog.show();
+//        } else {
+//
+//            if (videoView == null)
+//                showPlayer();
+//            else {
+//                if (videoView.isPlaying()) {
+//                    Toast.makeText(getApplicationContext(), "video is already playing, stopping now...", Toast.LENGTH_SHORT).show();
+////                Log.v(TAG, "video is already playing, stopping now...");
+//                    button_video = (Button) findViewById(R.id.button_video);
+//                    button_video.setText(R.string.video_start);
+//                    videoView.stopPlayback();
+//                } else {
+//                    Toast.makeText(getApplicationContext(), "video is not playing, starting it now...", Toast.LENGTH_SHORT).show();
+////                Log.v(TAG, "video is not playing, starting it now...");
+//                    button_video = (Button) findViewById(R.id.button_video);
+//                    button_video.setText(R.string.video_stop);
+//                    videoView.startPlayback();
+//                }
+//            }
+//        }
+//
+//    }
 
     public void setNumber(View view){
 
@@ -285,28 +292,28 @@ public class VideoStreaming extends AppCompatActivity {
 
     }
 
-    private void showPlayer() {
-        //VideoView videoView = (VideoView) findViewById(R.id.videoView1);
-        String url = prefs.getString("video_url", "");
-        Log.d("Video", "starting video playback: " + url);
-        button_video.setText(R.string.video_stop);
-
-        videoView = (PlayerView) findViewById(R.id.videoView1);
-        MediaController mediaController = new MediaController(this);
-        mediaController.setAnchorView(videoView);
-
-        Uri video = Uri.parse(url);
-        videoView.setMediaController(mediaController);
-
-        videoView.setSource(PlayerInputStream.read(url, getCacheDir()));
-        videoView.start();
-        //MjpegView mv = new MjpegView(this);
-
-        //setContentView(mv);
-        //videoView.setVideoPath(MjpegInputStream.read(url));
-        //videoView.setDisplayMode(MjpegView.SIZE_BEST_FIT);
-        //videoView.showFps(false);
-    }
+//    private void showPlayer() {
+//        //VideoView videoView = (VideoView) findViewById(R.id.videoView1);
+//        String url = prefs.getString("video_url", "");
+//        Log.d("Video", "starting video playback: " + url);
+//        button_video.setText(R.string.video_stop);
+//
+//        videoView = (PlayerView) findViewById(R.id.videoView1);
+//        MediaController mediaController = new MediaController(this);
+//        mediaController.setAnchorView(videoView);
+//
+//        Uri video = Uri.parse(url);
+//        videoView.setMediaController(mediaController);
+//
+//        videoView.setSource(PlayerInputStream.read(url, getCacheDir()));
+//        videoView.start();
+//        //MjpegView mv = new MjpegView(this);
+//
+//        //setContentView(mv);
+//        //videoView.setVideoPath(MjpegInputStream.read(url));
+//        //videoView.setDisplayMode(MjpegView.SIZE_BEST_FIT);
+//        //videoView.showFps(false);
+//    }
 
 
 

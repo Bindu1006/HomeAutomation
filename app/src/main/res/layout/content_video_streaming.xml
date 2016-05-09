@@ -13,21 +13,17 @@ xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:showIn="@layout/activity_add_url_to_stream"
     tools:context="com.example.shruti.homeautomation.AddUrlToStream">
 
-    <Button android:text="Start Video"
-        android:id="@+id/button_video"
-        android:layout_width="120dp"
-        android:layout_height="80dp"
-        android:onClick="startVideo"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentStart="true"></Button>
+
 
     <Button android:text="Set Number"
         android:id="@+id/button_setNum"
-        android:layout_width="120dp"
-        android:layout_height="80dp"
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
         android:onClick="setNumber"
-        android:layout_above="@+id/id_videoStatus"
-        android:layout_toEndOf="@+id/id_videoStatus"></Button>
+        android:layout_below="@+id/id_videoURL"
+        android:background="@color/btnBackground"
+        android:textColor="@color/btnTextColor"
+        android:layout_centerHorizontal="true"></Button>
 
     <TextView
         android:layout_width="wrap_content"
@@ -35,10 +31,9 @@ xmlns:app="http://schemas.android.com/apk/res-auto"
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:text="Video Status: "
         android:id="@+id/id_videoStatus"
-        android:layout_marginTop="78dp"
+        android:layout_marginTop="160dp"
         android:layout_marginLeft="30dp"
         android:layout_marginStart="59dp"
-        android:layout_below="@+id/button_video"
         android:layout_alignParentStart="true" />
 
     <Switch
@@ -62,18 +57,19 @@ xmlns:app="http://schemas.android.com/apk/res-auto"
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:text=""
         android:id="@+id/id_videoURL"
+        android:autoLink="web"
         android:layout_marginTop="230dp"
         android:layout_marginLeft="20dp"
         android:layout_marginStart="20dp"
         android:layout_alignParentStart="true" />
 
-    <com.example.shruti.homeautomation.PlayerFiles.PlayerView
-        android:id="@+id/videoView1"
-        android:layout_width="fill_parent"
-        android:layout_marginTop="300dp"
-        android:layout_height="200dp">
+    <!--<com.example.shruti.homeautomation.PlayerFiles.PlayerView-->
+        <!--android:id="@+id/videoView1"-->
+        <!--android:layout_width="fill_parent"-->
+        <!--android:layout_marginTop="300dp"-->
+        <!--android:layout_height="200dp">-->
 
-    </com.example.shruti.homeautomation.PlayerFiles.PlayerView>
+    <!--</com.example.shruti.homeautomation.PlayerFiles.PlayerView>-->
 
 </RelativeLayout>
 

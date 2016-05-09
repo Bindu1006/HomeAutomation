@@ -2,6 +2,7 @@
 
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/content"
+    android:background="#fcfdfd"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -23,6 +24,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
+            android:layout_marginLeft="50dp"
+            android:layout_marginTop="20dp"
             android:paddingRight="10dp"/>
 
         <TextView style="?android:textAppearanceMedium"
@@ -30,7 +33,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/id_steps"
-            android:text="Text" />
+            android:layout_marginTop="50dp"
+            android:text="Text"
+            android:textStyle="bold"/>
 
     </LinearLayout>
 

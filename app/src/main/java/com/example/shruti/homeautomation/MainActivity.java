@@ -10,6 +10,10 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ListView;
+import android.widget.Toast;
+
+import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -22,18 +26,11 @@ public class MainActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
+
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_main, menu);
         return true;
@@ -41,9 +38,7 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
+
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
@@ -54,34 +49,39 @@ public class MainActivity extends AppCompatActivity {
             //intent.putExtra("USERLIST",userDetailsList);
             startActivity(intent);
         }
+//
+//        if (id == R.id.id_ConfigureLedPins) {
+//            Log.d("MainActivity   ::: ", " Configure Led Pins");
+//
+//            Intent intent = new Intent(this, ConfigureLedPins.class);
+//            startActivity(intent);
+//
+////            startActivityForResult(new Intent(Intent.ACTION_PICK, ContactsContract.Contacts.CONTENT_URI), PICK_CONTACT);
+//        }
+//
+//        if (id == R.id.id_configureWemoSwitch) {
+//            Log.d("MainActivity   ::: ", " Configure Led Pins");
+//            Intent intent = new Intent(this, ConfigureWemoSwitch.class);
+//            startActivity(intent);
+//        }
+//
+//        if (id == R.id.id_configureRecording) {
+//            Log.d("MainActivity   ::: ", " Configure Recording");
+//            Intent intent = new Intent(this, VideoStreaming.class);
+//            startActivity(intent);
+//        }
+//
+//        if (id == R.id.id_addPubnubKeys) {
+//            Log.d("MainActivity   ::: ", " Configure Recording");
+//            Intent intent = new Intent(this, AddPubnubKeysActivity.class);
+//            startActivity(intent);
+//        }
 
-        if (id == R.id.id_ConfigureLedPins) {
-            Log.d("MainActivity   ::: ", " Configure Led Pins");
-
-            Intent intent = new Intent(this, ConfigureLedPins.class);
+        if (id == R.id.id_getStarted) {
+            Log.d("MainActivity   ::: ", " Get Started");
+            Intent intent = new Intent(this, GetStartedActivity.class);
             startActivity(intent);
-
-//            startActivityForResult(new Intent(Intent.ACTION_PICK, ContactsContract.Contacts.CONTENT_URI), PICK_CONTACT);
         }
-
-        if (id == R.id.id_configureWemoSwitch) {
-            Log.d("MainActivity   ::: ", " Configure Led Pins");
-            Intent intent = new Intent(this, ConfigureWemoSwitch.class);
-            startActivity(intent);
-        }
-
-        if (id == R.id.id_configureRecording) {
-            Log.d("MainActivity   ::: ", " Configure Recording");
-            Intent intent = new Intent(this, VideoStreaming.class);
-            startActivity(intent);
-        }
-
-        if (id == R.id.id_addPubnubKeys) {
-            Log.d("MainActivity   ::: ", " Configure Recording");
-            Intent intent = new Intent(this, AddPubnubKeysActivity.class);
-            startActivity(intent);
-        }
-
 
 
         return super.onOptionsItemSelected(item);
@@ -101,7 +101,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void configureWemo(View view) {
-        Log.d("MainActivity   ::: ", " Configure Led Pins");
+        Log.d("MainActivity   ::: ", " Configure Smart Switch");
+
         Intent intent = new Intent(this, ConfigureWemoSwitch.class);
         startActivity(intent);
     }

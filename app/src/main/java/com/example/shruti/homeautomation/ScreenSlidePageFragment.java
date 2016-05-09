@@ -58,7 +58,7 @@ public class ScreenSlidePageFragment extends Fragment {
                     getString(R.string.title_template_step1, mPageNumber + 1));
 
             ImageView step1_image = (ImageView) rootView.findViewById(R.id.id_steps_image);
-            step1_image.setImageResource(R.drawable.home);
+            step1_image.setImageResource(R.drawable.started_key);
 
             ((TextView) rootView.findViewById(R.id.id_steps)).setText(
                     getString(R.string.step1_details));
@@ -69,7 +69,7 @@ public class ScreenSlidePageFragment extends Fragment {
                     getString(R.string.title_template_step2, mPageNumber + 1));
 
             ImageView step1_image = (ImageView) rootView.findViewById(R.id.id_steps_image);
-            step1_image.setImageResource(R.drawable.home);
+            step1_image.setImageResource(R.drawable.started_switch);
 
             ((TextView) rootView.findViewById(R.id.id_steps)).setText(
                     getString(R.string.step2_details));
@@ -77,35 +77,46 @@ public class ScreenSlidePageFragment extends Fragment {
         } if(mPageNumber == 2){
             System.out.println("hi"+mPageNumber);
             ((TextView) rootView.findViewById(android.R.id.text1)).setText(
-                    getString(R.string.title_template_step2, mPageNumber + 1));
+                    getString(R.string.title_template_step3, mPageNumber + 1));
 
             ImageView step1_image = (ImageView) rootView.findViewById(R.id.id_steps_image);
-            step1_image.setImageResource(R.drawable.home);
+            step1_image.setImageResource(R.drawable.started_alarm);
 
             ((TextView) rootView.findViewById(R.id.id_steps)).setText(
-                    getString(R.string.step2_details));
+                    getString(R.string.step3_details));
 
         } if(mPageNumber == 3){
             System.out.println("hi"+mPageNumber);
             ((TextView) rootView.findViewById(android.R.id.text1)).setText(
-                    getString(R.string.title_template_step2, mPageNumber + 1));
+                    getString(R.string.title_template_step4, mPageNumber + 1));
 
             ImageView step1_image = (ImageView) rootView.findViewById(R.id.id_steps_image);
-            step1_image.setImageResource(R.drawable.home);
+            step1_image.setImageResource(R.drawable.started_video);
 
             ((TextView) rootView.findViewById(R.id.id_steps)).setText(
-                    getString(R.string.step2_details));
+                    getString(R.string.step4_details));
 
         } if(mPageNumber == 4){
             System.out.println("hi"+mPageNumber);
             ((TextView) rootView.findViewById(android.R.id.text1)).setText(
-                    getString(R.string.title_template_step2, mPageNumber + 1));
+                    getString(R.string.title_template_step5, mPageNumber + 1));
 
             ImageView step1_image = (ImageView) rootView.findViewById(R.id.id_steps_image);
-            step1_image.setImageResource(R.drawable.home);
+            step1_image.setImageResource(R.drawable.started_motion1);
 
             ((TextView) rootView.findViewById(R.id.id_steps)).setText(
-                    getString(R.string.step2_details));
+                    getString(R.string.step5_details));
+
+        }if(mPageNumber == 5){
+            System.out.println("hi"+mPageNumber);
+            ((TextView) rootView.findViewById(android.R.id.text1)).setText(
+                    getString(R.string.title_template_step6, mPageNumber + 1));
+
+            ImageView step1_image = (ImageView) rootView.findViewById(R.id.id_steps_image);
+            step1_image.setImageResource(R.drawable.pi_home);
+
+            ((TextView) rootView.findViewById(R.id.id_steps)).setText(
+                    getString(R.string.step5_details));
 
         }
 

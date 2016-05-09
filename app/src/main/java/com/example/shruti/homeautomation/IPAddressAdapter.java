@@ -33,8 +33,8 @@ public class IPAddressAdapter extends ArrayAdapter<IPAddressDetails> {
     private Pubnub pubnub;
     DatabaseController databaseController;
 
-    public static final String PUBLISH_KEY = "pub-c-e2930ace-7719-4803-9d9d-339ae326b4e6";
-    public static final String SUBSCRIBE_KEY = "sub-c-1d10a854-080e-11e6-996b-0619f8945a4f";
+//    public static final String PUBLISH_KEY = "pub-c-e2930ace-7719-4803-9d9d-339ae326b4e6";
+//    public static final String SUBSCRIBE_KEY = "sub-c-1d10a854-080e-11e6-996b-0619f8945a4f";
     public static final String CHANNEL = "phue";
 
     public IPAddressAdapter(Context context, ArrayList<IPAddressDetails> users) {
@@ -134,7 +134,9 @@ public class IPAddressAdapter extends ArrayAdapter<IPAddressDetails> {
     }
 
     public void initPubnub(){
-        this.pubnub = new Pubnub(PUBLISH_KEY,SUBSCRIBE_KEY);
+        databaseController = new DatabaseController(getContext().getApplicationContext());
+        PubNubKeysBO pubnubKeys = databaseController.getKeys();
+        this.pubnub = new Pubnub(pubnubKeys.getPubKey(),pubnubKeys.getSubKey());
         this.pubnub.setUUID("AndroidPHue");
         subscribe();
     }
@@ -167,12 +169,17 @@ public class IPAddressAdapter extends ArrayAdapter<IPAddressDetails> {
                     Log.d("PUBNUB", "SUBSCRIBE : " + channel + " : "
                             + message.getClass() + " : " + message.toString());
                     if (message.toString().contains("MOTION_DETECTED")) {
-                        Log.d("Motiion", "Detected");
+                        Log.d("Motiion","Detected");
                         databaseController = new DatabaseController(getContext().getApplicationContext());
                         String phoneNumber = databaseController.getPhoneNumber();
-                        if (!phoneNumber.equalsIgnoreCase("")) {
+                        if (!phoneNumber.equalsIgnoreCase("")){
                             String smsMessage = "Motion Detected!!!  Please go to the below URL to see the Video: http://especsjsu.dyndns.org:8090/stream.html";
-                            SmsManager.getDefault().sendTextMessage(phoneNumber, null, smsMessage, null, null);
+                            long time = System.currentTimeMillis(); //System.currentTimeMillis() + 1000*60*30;
+                            boolean result = databaseController.setMessageSentTime(time);
+                            if (result){
+                                SmsManager.getDefault().sendTextMessage(phoneNumber, null, smsMessage, null,null);
+                            }
+
                         }
                     }
                 }

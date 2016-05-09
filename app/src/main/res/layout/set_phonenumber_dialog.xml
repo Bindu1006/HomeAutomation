@@ -24,11 +24,12 @@
         <!--android:id="@+id/id_phoneNumber" />-->
 
     <EditText
-        android:layout_width="350dp"
+        android:layout_width="260dp"
         android:layout_height="wrap_content"
         android:id="@+id/id_phoneNumber"
         android:layout_marginTop="40dp"
         android:layout_alignParentEnd="true"
+        android:layout_marginLeft="20dp"
         android:textSize="15dp"/>
 
     <TextView
@@ -47,7 +48,7 @@
         android:layout_height="wrap_content">
 
         <Button
-            android:layout_width="160dp"
+            android:layout_width="140dp"
             android:layout_height="wrap_content"
             android:id="@+id/id_saveButton"
             android:layout_marginTop="50dp"
@@ -55,10 +56,11 @@
             android:text="Save Number"
             android:background="@color/btnBackground"
             android:textColor="@color/btnTextColor"
-            android:textSize="@dimen/btnTextSize"/>
+            android:textSize="@dimen/btnTextSize"
+            android:layout_marginBottom="20dp"/>
 
         <Button
-            android:layout_width="160dp"
+            android:layout_width="100dp"
             android:layout_height="wrap_content"
             android:id="@+id/id_cancelButton"
             android:layout_marginLeft="20dp"
@@ -67,10 +69,10 @@
             android:layout_toRightOf="@+id/id_saveButton"
             android:background="@color/btnBackground"
             android:textColor="@color/btnTextColor"
-            android:textSize="@dimen/btnTextSize"/>
+            android:textSize="@dimen/btnTextSize"
+            android:layout_marginBottom="20dp"/>
 
     </RelativeLayout>
-
 
 
 </LinearLayout>

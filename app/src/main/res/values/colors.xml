@@ -10,4 +10,6 @@
 
     <color name="btnTextColor">#faf8f8</color>
     <color name="btnBackground">#e50b0606</color>
+
+    <color name="black">#e5000000</color>
 </resources>
